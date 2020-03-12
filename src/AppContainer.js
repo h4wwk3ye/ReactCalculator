@@ -20,7 +20,7 @@ function AppContainer() {
             }
 
         }
-        console.log(string, name)
+
         setString(string + name)
     }
 
