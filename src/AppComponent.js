@@ -1,9 +1,10 @@
 import React from "react"
 
 function AppComponent(props) {
+    console.log(props)
     return (
         <div className="mainContent">
-            <textarea className="ansBox" defaultValue={props.state.string}></textarea>
+            <textarea className="ansBox" defaultValue={props.string}></textarea>
 
             <br />
             <button className="integers" onClick={props.handleClick} name="1">1</button>

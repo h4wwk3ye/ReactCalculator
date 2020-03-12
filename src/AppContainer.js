@@ -1,51 +1,36 @@
-import React from "react"
+import React, { useState } from "react"
 import AppComponent from "./AppComponent"
 
-class AppContainer extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            string: ""
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
+function AppContainer() {
+    const [string, setString] = useState("")
 
-    handleClick(event) {
+    function handleClick(event) {
         const { name } = event.target
 
         if (name === "clear") {
-            return this.setState(() => ({
-                string: ""
-            }))
+            return setString("")
         }
 
         if (name === "calculate") {
             try {
-                eval(this.state.string)
-                return this.setState(prevState => ({
-                    string: eval(prevState.string)
-                }))
+                eval(string)
+                return setString(eval(string))
             } catch (error) {
-                return this.setState(prevState => ({
-                    string: "Invalid operation!!"
-                }))
+                return setString("Invalid operation!!")
             }
 
         }
-
-        this.setState(prevState => ({
-            string: prevState.string + name
-        }))
+        console.log(string, name)
+        setString(string + name)
     }
 
-    render() {
-        return (
-            <AppComponent
-                handleClick={this.handleClick}
-                state={this.state}
-            />
-        )
-    }
+    return (
+        <
+            AppComponent
+            handleClick={handleClick}
+            string={string}
+        />
+    )
 }
 
 export default AppContainer
