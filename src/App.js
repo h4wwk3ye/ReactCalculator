@@ -5,10 +5,7 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      firstOperand: "",
-      secondOperand: "",
-      operator: "",
-      ans: ""
+      string: ""
     }
     this.handleClick = this.handleClick.bind(this)
   }
@@ -16,70 +13,36 @@ class App extends React.Component {
   handleClick(event) {
     const { name } = event.target
 
-    if (name === '+' || name === '-' || name === '*' || name === '/') {
-      return this.setState((prevState) => ({
-        operator: name
-      }))
-    }
-
     if (name === "clear") {
       return this.setState(() => ({
-        firstOperand: "",
-        secondOperand: "",
-        operator: "",
-        ans: ""
+        string: ""
       }))
     }
 
     if (name === "calculate") {
-      let x
-      if (this.state.operator === '+') {
-        x = this.state.firstOperand + this.state.secondOperand
-      } else if (this.state.operator === '-') {
-        x = this.state.firstOperand - this.state.secondOperand
-      } else if (this.state.operator === '*') {
-        x = this.state.firstOperand * this.state.secondOperand
-      } else if (this.state.operator === '/') {
-        x = this.state.firstOperand / this.state.secondOperand
+      try {
+        let x = eval(this.state.string)
+        return this.setState(prevState => ({
+          string: eval(prevState.string)
+        }))
+      } catch (error) {
+        return this.setState(prevState => ({
+          string: "Invalid operation!!"
+        }))
       }
-      return this.setState(prevState => ({
-        ans: x,
-        firstOperand: "",
-        secondOperand: "",
-        operator: ""
-      }))
+
     }
 
-    if (this.state.operator === '') {
-      this.setState(prevState => ({
-        firstOperand: prevState.firstOperand * 10 + parseInt(name)
-      }))
-    } else {
-      this.setState(prevState => ({
-        secondOperand: prevState.secondOperand * 10 + parseInt(name)
-      }))
-    }
+    this.setState(prevState => ({
+      string: prevState.string + name
+    }))
   }
 
-  handleChange() {
-    this.setState({})
-  }
 
   render() {
     return (
       <div className="mainContent">
-        <textarea
-          className="ansBox"
-          value=
-          {
-            this.state.firstOperand + (this.state.firstOperand === '' ? "" : " ") +
-            this.state.operator + (this.state.operator === '' ? "" : " ") +
-            this.state.secondOperand + (this.state.secondOperand === '' ? "" : " ") +
-            this.state.ans
-          }
-          onChange={this.handleChange}
-        >
-        </textarea>
+        <textarea className="ansBox" defaultValue={this.state.string}></textarea>
 
         <br />
         <button className="integers" onClick={this.handleClick} name="1">1</button>
